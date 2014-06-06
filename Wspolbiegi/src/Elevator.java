@@ -5,7 +5,7 @@ public class Elevator extends Thread {
 	int minFloor;
 	int maxFloor; // pietro ograniczajace gorne dla windy
 	int aktualnePietro = 0;
-	final int pojemnoscWindy = 6; // tyle osob pomiesci winda
+	final int pojemnoscWindy = 5; // tyle osob pomiesci winda
 	
 	Start s = new Start();
 	
@@ -36,18 +36,19 @@ public class Elevator extends Thread {
 		ruchWindy();
 	}
 	
-	public synchronized void ruchWindy(){   // musi wykonac metode do konca
+	public void ruchWindy(){   // musi wykonac metode do konca  synchronized ?
 		
 		while(true){
 		
-		if(rodzaj == 1){	// windy obslugujace poziomy nad ziemia
+		if(rodzaj == 1){	// windy obslugujace poziomy nad ziemia od 0 po polowy
 			aktualnePietro = minFloor;
 			
 			for(int i = minFloor; i <= maxFloor; i++){
 			
 			try {		
 				// czeka na pietrze
-				System.out.println(this.getName() + " na pietrze | " + i);
+				System.out.println(this.getName() + "  " + i + "    |");
+				System.out.println("----------------------------------------------");
 				Thread.sleep(2000);
 				
 				
@@ -63,7 +64,8 @@ public class Elevator extends Thread {
 			for(int i = aktualnePietro; i >= minFloor; i--){
 				
 				try {
-					System.out.println(this.getName() + " na pietrze | " + i);
+					System.out.println(this.getName() + "  " + i + "    |");
+					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -72,16 +74,18 @@ public class Elevator extends Thread {
 				aktualnePietro = i;
 			}
 		
-		}else if(rodzaj == 2){
+		}else if(rodzaj == 2){	// windy obslugujace pietra 0, n+1 -- do konca budynku
 			
 			aktualnePietro = 0;
-			System.out.println(this.getName() + " na pietrze | " + aktualnePietro);
+			System.out.println(this.getName() + " " + aktualnePietro + "     |");
+			System.out.println("----------------------------------------------");
 			aktualnePietro = minFloor;
 					
 			for(int i = minFloor; i <= maxFloor; i++){
 				
 				try {
-					System.out.println(this.getName() + " na pietrze | " + i);
+					System.out.println(this.getName() + "  " + i + "    |");
+					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
 					
 					
@@ -97,7 +101,8 @@ public class Elevator extends Thread {
 			for(int i = aktualnePietro; i >= minFloor; i--){
 				
 				try {
-					System.out.println(this.getName() + " na pietrze | " + i);
+					System.out.println(this.getName() + "  " + i + "    |");
+					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -105,14 +110,16 @@ public class Elevator extends Thread {
 				}
 			}
 			aktualnePietro = 0;
-			System.out.println(this.getName() + " na pietrze | " + aktualnePietro);
+			System.out.println(this.getName() + " " + aktualnePietro + "    |");
+			System.out.println("----------------------------------------------");
 			
 		}else{		// windy obslugujace garaz
 			
 			for(int i = minFloor; i >= maxFloor; i--){
 				
 				try {									// czeka na pietrze
-					System.out.println(this.getName() + " na pietrze | " + i);
+					System.out.println(this.getName() + "  " + i + "   |");
+					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -126,7 +133,8 @@ public class Elevator extends Thread {
 			for(int i = maxFloor; i <= minFloor; i++){
 				
 				try {
-					System.out.println(this.getName() + " na pietrze | " + i);
+					System.out.println(this.getName() + "  " + i + "   |");
+					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

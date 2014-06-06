@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -7,6 +9,10 @@ public class Start {
 	static int liczbaPieter;
 	int liczbaWind;
 	
+	List<Elevator> listaWind = new ArrayList<Elevator>();
+	List<Thread> watkiWind = new ArrayList<Thread>();
+
+	
 	public void setup(){
 		
 		Scanner s = new Scanner(System.in);
@@ -14,30 +20,30 @@ public class Start {
 		System.out.println("Podaj liczbe pasazerow : ");
 		liczbaPasazerow = s.nextInt();
 		
-		System.out.println("Podaj liczbe pieter (parzysta) : ");
+		System.out.println("Podaj liczbe pieter : ");
 		liczbaPieter = s.nextInt();
 		
-		System.out.println("Podaj liczbe wind (podzielna przez 3) : ");
+		System.out.println("Podaj liczbe wind (podzielna przez 3 stworzy tyle samo wind kazdego rozaju) : ");
 		liczbaWind = s.nextInt();
 		
-	//	Thread watek1 = new Thread("winda 1");
-		//Thread watek2 = new Thread("winda 2");
+	
+		System.out.println(" | Winda     | pietro | osoby w windzie |");
+		System.out.println("----------------------------------------------");
+		// dodanie nazw do wind
+		for(int i = 0; i < liczbaWind; i++){
+
+			listaWind.add(new Elevator((i%3)+1));
+			listaWind.get(i).setName(" | Winda " + ((i%3)+1) + "." + ((i+1)/4) + " | ");
+		}
 		
-		Elevator e1 = new Elevator(1);
-		e1.setName("| Winda 1 | ");
+		for(int i = 0; i < liczbaWind; i++){
+			
+			watkiWind.add(new Thread(listaWind.get(i)));
+		}
 		
-		Elevator e2 = new Elevator(2);
-		e2.setName("| Winda 2 | ");
+		for(int i = 0; i < liczbaWind; i++){
+			watkiWind.get(i).start();
+		}
 		
-		Elevator e3 = new Elevator(3);
-		e3.setName("| Winda 3 | ");
-		
-		Thread t1 = new Thread(e1);
-		Thread t2 = new Thread(e2);
-		Thread t3 = new Thread(e3);
-		
-		t1.start();
-		t2.start();
-		t3.start();
 	}
 }
