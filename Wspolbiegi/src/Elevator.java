@@ -36,7 +36,7 @@ public class Elevator extends Thread {
 		ruchWindy();
 	}
 	
-	public void ruchWindy(){   // musi wykonac metode do konca  synchronized ?
+	public synchronized void ruchWindy(){   // musi wykonac metode do konca  
 		
 		while(true){
 		
