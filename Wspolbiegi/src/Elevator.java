@@ -1,3 +1,5 @@
+import java.util.concurrent.Semaphore;
+
 
 public class Elevator extends Thread {
 
@@ -5,9 +7,16 @@ public class Elevator extends Thread {
 	int minFloor;
 	int maxFloor; // pietro ograniczajace gorne dla windy
 	int aktualnePietro = 0;
-	final int pojemnoscWindy = 5; // tyle osob pomiesci winda
+	final int FULL = 5; // tyle osob pomiesci winda
+	int ileOsob = 0;
+	
+	Semaphore available = new Semaphore(FULL);
 	
 	Start s = new Start();
+	
+	public Elevator(){
+		
+	}
 	
 	public Elevator(int id){
 		rodzaj = id;
@@ -47,6 +56,9 @@ public class Elevator extends Thread {
 			
 			try {		
 				// czeka na pietrze
+				
+				aktualnePietro = i;
+				
 				System.out.println(this.getName() + "  " + i + "    |");
 				System.out.println("----------------------------------------------");
 				Thread.sleep(2000);
@@ -56,7 +68,7 @@ public class Elevator extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			aktualnePietro = i;
+			
 			}
 			
 			
@@ -64,6 +76,9 @@ public class Elevator extends Thread {
 			for(int i = aktualnePietro; i >= minFloor; i--){
 				
 				try {
+					
+					aktualnePietro = i;
+					
 					System.out.println(this.getName() + "  " + i + "    |");
 					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
@@ -71,19 +86,33 @@ public class Elevator extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				aktualnePietro = i;
+				
 			}
 		
 		}else if(rodzaj == 2){	// windy obslugujace pietra 0, n+1 -- do konca budynku
 			
-			aktualnePietro = 0;
-			System.out.println(this.getName() + " " + aktualnePietro + "     |");
-			System.out.println("----------------------------------------------");
+			
+			
+			try {
+				
+				aktualnePietro = 0;
+				
+				Thread.sleep(2000);
+				System.out.println(this.getName() + " " + aktualnePietro + "     |");
+				System.out.println("----------------------------------------------");
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 			aktualnePietro = minFloor;
 					
 			for(int i = minFloor; i <= maxFloor; i++){
 				
 				try {
+					aktualnePietro = i;
+					
 					System.out.println(this.getName() + "  " + i + "    |");
 					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
@@ -93,7 +122,7 @@ public class Elevator extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				aktualnePietro = i;
+				
 			}
 			
 			
@@ -101,6 +130,8 @@ public class Elevator extends Thread {
 			for(int i = aktualnePietro; i >= minFloor; i--){
 				
 				try {
+					aktualnePietro = i;
+					
 					System.out.println(this.getName() + "  " + i + "    |");
 					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
@@ -109,15 +140,27 @@ public class Elevator extends Thread {
 					e.printStackTrace();
 				}
 			}
-			aktualnePietro = 0;
-			System.out.println(this.getName() + " " + aktualnePietro + "    |");
-			System.out.println("----------------------------------------------");
+			
+			try {
+				aktualnePietro = 0;
+				System.out.println(this.getName() + " " + aktualnePietro + "    |");
+				System.out.println("----------------------------------------------");
+				
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			
 		}else{		// windy obslugujace garaz
 			
 			for(int i = minFloor; i >= maxFloor; i--){
 				
-				try {									// czeka na pietrze
+				try {			
+					aktualnePietro = i;
+					// czeka na pietrze
 					System.out.println(this.getName() + "  " + i + "   |");
 					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
@@ -126,13 +169,15 @@ public class Elevator extends Thread {
 					e.printStackTrace();
 				}
 				
-				aktualnePietro = i;
+				
 			}
 			
 			
 			for(int i = maxFloor; i <= minFloor; i++){
 				
 				try {
+					aktualnePietro = i;
+					
 					System.out.println(this.getName() + "  " + i + "   |");
 					System.out.println("----------------------------------------------");
 					Thread.sleep(2000);
