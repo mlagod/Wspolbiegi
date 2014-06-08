@@ -1,4 +1,8 @@
+
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class Elevator extends Thread {
@@ -9,10 +13,15 @@ public class Elevator extends Thread {
 	int aktualnePietro = 0;
 	final int FULL = 5; // tyle osob pomiesci winda
 	int ileOsob = 0;
-	
-	Semaphore available = new Semaphore(FULL);
-	
 	Start s = new Start();
+	//Person p;
+	
+	public int selfNumber=0;
+	
+	
+	
+	
+	
 	
 	public Elevator(){
 		
@@ -37,6 +46,8 @@ public class Elevator extends Thread {
 			minFloor = 0;
 			maxFloor = -2;
 		}
+		
+	
 	}
 	
 	
@@ -59,7 +70,11 @@ public class Elevator extends Thread {
 				
 				aktualnePietro = i;
 				
-				System.out.println(this.getName() + "  " + i + "    |");
+			/*	if(p.inside == true){
+					String s = p.getName();
+				} */
+				
+				System.out.println(this.getName() + "  " + i + "    | ");
 				System.out.println("----------------------------------------------");
 				Thread.sleep(2000);
 				
